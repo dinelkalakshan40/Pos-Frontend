@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+
+    <title>Document</title>
+    <style>
+        *{
+            font-family: 'Varela Round', sans-serif;
+        }
+        .table-custom th {
+            background-color: #2d8bbd; /* Change this color as needed */
+            /* Optional: Change text color for contrast */
+        }
+    </style>
+</head>
+<body>
+    
+    <header id="header" style="font-weight: bold; ">
+        <nav class="navbar navbar-expand-lg" >
+            <div class="container-fluid">
+                <img class="navbar-brand " style="margin-left: 15px;" src="assets/img/cropped_image.png"  width="60px"  title="tomato header logo" alt="Pos-System">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                        <a class="nav-link"  id="nav-home" href="#">Home</a>
+                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-customer"  aria-current="page" href="#">Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-item" href="#">Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-Place-order" href="#">Place Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-order-history" href="#">Order History</a>
+                        </li>
+    
+    
+                    </ul>
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li id="SignupButtonH" class="nav-item" >
+                            <a id="SignupButton" class="nav-link active" aria-current="page" href="#">
+                                <i class="fa fa-user" ></i>
+                                SignUp
+                            </a>
+                        </li>
+                        <li id="LogoutButtonH" class="nav-item">
+                            <a id="LoginButton" class="nav-link active" aria-current="page" href="#">
+                                <i class="fa fa-sign-out"></i>
+                                Logout
+                            </a>
+    
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>  
+      <!-- customer page -->
+      <div id="customerPage" class="container mt-4" style="display:block;">
+        <h3 class="text-center">Customer Management</h3>
+        <div class="row">
+          <!-- Customer Form Card -->
+          <div class="col-md-6 mt-2">
+            <div class="card" style="font-weight: bold;">
+              <div class="card-header" style="background-color: #2d8bbd ;">
+                Customer Form
+              </div>
+              <div class="card-body">
+                <form id="customerForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="customerId">Customer ID</label>
+                      <input type="text" class="form-control" id="customerId" placeholder="Enter ID">
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="customerName">Name</label>
+                      <input type="text" class="form-control" id="customerName" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="customerPhone">Phone</label>
+                      <input type="text" class="form-control" id="customerPhone" placeholder="Enter Phone">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="customerAddress">Address</label>
+                        <input type="text" class="form-control" id="customerAddress" placeholder="Enter Address">
+                      </div>
+                  </div>
+                  <div class="form-group d-flex mt-3">
+                    <button type="button" class="btn btn-primary mx-2 " id="save-customer" style="border-radius: 10px;">Add</button>
+                    <button type="button" class="btn btn-warning mx-2" style="border-radius: 10px;">Update</button>
+                    <button type="button" class="btn btn-danger mx-2" style="border-radius: 10px;">Delete</button>
+                    <button type="button" class="btn btn-secondary mx-2" style="border-radius: 10px;">Clear</button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Search Bar Card -->
+          <div class="col-md-6 mt-2">
+            <div class="card">
+              <div class="card-header" style="background-color: #2d8bbd ;font-weight: bold;">
+                Search Customer
+              </div>
+              <div class="card-body">
+                <input type="text" class="form-control" id="searchCustomer" placeholder="Search...">
+                <button type="button" class="btn mt-2 " style="background-color: #2d8bbd ; color: aliceblue;">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="mt-4">
+          <h3 class="text-center">Customer List</h4>
+          <table class="table table-bordered mt-3 table-custom">
+            <thead>
+              <tr>
+                <th class="col-3">ID</th>
+                <th class="col-3">Name</th>
+                <th class="col-3">Phone</th>
+                <th class="col-3">Address</th>
+              </tr>
+            </thead>
+            <tbody id="customerTableBody">
+              <!-- Customer data will be inserted here dynamically -->
+              <tr>
+                <td>CID-001</td>
+                <td>John Doe</td>
+                <td>25</td>
+                <td>123 Main St.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- item page -->
+      <div id="itemPage" class="container mt-4" style="display:block;">
+        <h3 class="text-center">Item Management</h3>
+        <div class="row">
+          <!-- Customer Form Card -->
+          <div class="col-md-6 mt-2">
+            <div class="card" style="font-weight: bold;">
+              <div class="card-header" style="background-color: #2d8bbd ;">
+                Item Form
+              </div>
+              <div class="card-body">
+                <form id="itemForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="itemCode">Item Code</label>
+                      <input type="text" class="form-control" id="itemCode" placeholder="Enter ID">
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="itemName">Name</label>
+                      <input type="text" class="form-control" id="itemName" placeholder="Enter Item Name">
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="itemPrice">Price</label>
+                      <input type="text" class="form-control" id="itemPrice" placeholder="Enter Price">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="itemQty">Qty</label>
+                        <input type="text" class="form-control" id="itemQty" placeholder="Enter Qty">
+                      </div>
+                  </div>
+                  <div class="form-group d-flex mt-3">
+                    <button type="button" class="btn btn-primary mx-2 " style="border-radius: 10px;">Add</button>
+                    <button type="button" class="btn btn-warning mx-2" style="border-radius: 10px;">Update</button>
+                    <button type="button" class="btn btn-danger mx-2" style="border-radius: 10px;">Delete</button>
+                    <button type="button" class="btn btn-secondary mx-2" style="border-radius: 10px;">Clear</button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Search Bar Card -->
+          <div class="col-md-6 mt-2">
+            <div class="card">
+              <div class="card-header" style="background-color: #2d8bbd ;font-weight: bold;">
+                Search Item
+              </div>
+              <div class="card-body">
+                <input type="text" class="form-control" id="searchItem" placeholder="Search...">
+                <button type="button" class="btn mt-2 " style="background-color: #2d8bbd ; color: aliceblue;">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="mt-4">
+          <h3 class="text-center">Item List</h4>
+          <table class="table table-bordered mt-3 table-custom">
+            <thead>
+              <tr>
+                <th class="col-3">Code</th>
+                <th class="col-3">Name</th>
+                <th class="col-3">Price</th>
+                <th class="col-3">Qty</th>
+              </tr>
+            </thead>
+            <tbody id="itemTableBody">
+              <tr>
+                <td>CID-001</td>
+                <td>John Doe</td>
+                <td>25</td>
+                <td>123 Main St.</td>
+            </tr>
+              <!-- Customer data will be inserted here dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <main class="container-fluid" id="place-order-page">
+        <!--main content-->
+        <section>
+            <section class="row p-2" style="height: 100%">
+    
+                <!--Order id date-->
+                <div class="col-lg-3 col-12 bg-body">
+                    <div class="container row text-body-tertiary ">
+                        <label class="col-6" style="color: black;font-weight: bold">Order ID: </label>
+                        <input type="text" id="orderId" readonly class="col-6" placeholder="" style="margin-bottom: 20px">
+                        <label class="col-6" style="color: black;font-weight: bold">Date: </label>
+                        <input type="date" id="orderDate" class="col-6">
+                    </div>
+                    <br>
+    
+                    <!-- customer Details-->
+                    <div class="container text-body-secondary border border-3 p-1 ">
+                        <div class="text-center  p-1 " style="background-color: #2d8bbd ; color:white; font-size: 20px;">
+                            Customer Details
+                        </div>
+    
+                        <label class="col-4 mt-2" for="customer-select" style="font-weight: bold; color: black;" >Customer</label>
+                        <select id="customer-select" class="form-select col-7 mt-2 customer-id-value"  style="width: 60%" aria-label="Default select example">
+                            <optgroup label="Select a customer">
+                                <option value="1"></option>
+                            </optgroup>
+                           <!-- <option selected>Open this select menu</option>-->
+                            <!--<option value="1"></option>-->
+                        </select>
+    
+                        <label class="col-4 mt-2" style="font-weight: bold; color: black;">Customer-ID</label>
+                        <input class="col-7 mt-2" id="customerIdOrder">
+    
+                        <label class="col-4 mt-2" style="font-weight: bold; color: black;">Name</label>
+                        <input class="col-7 mt-2" id="customerNameOrder">
+    
+                        <label class="col-4 mt-2" style="font-weight: bold; color: black;">Address</label>
+                        <input class="col-7 mt-2" id="customerAddressOrder">
+    
+                        <label class="col-4 mt-2" style="font-weight: bold; color: black;">Salary</label>
+                        <input class="col-7 mt-2" id="customerSalaryOrder">
+    
+                    </div>
+                </div>
+    
+                <!--Item Details-->
+                <div class=" col-lg-5  col-12 bg-body">
+                    <div class="container text-body-secondary border border-3 p-1">
+                        <div class="text-center  p-1" style="background-color:#a94188  ; color:white;font-size: 20px;">
+                            Item Details
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-md-6 col-12 " style="font-weight: bold; color: black;">
+                                <label class="col-4 mt-2">Item</label>
+                                <select id="item-select" class="form-select col-7 mt-2"  style="width: 60%" aria-label="Default select example">
+                                    <option value="1"></option>
+    
+                                </select>
+    
+                                <label class="col-4 mt-2">Name</label>
+                                <input class="col-7 mt-2" id="itemNameOrder">
+    
+                                <label class="col-4 mt-2">QtyOnHand</label>
+                                <input class="col-7 mt-2" id="itemQtyOrder">
+                            </div>
+    
+                            <div class="col-md-6 col-12" style="font-weight: bold;color: black;"><br><br><br>
+                                <label class="col-4 mt-2">ItemCode</label>
+                                <input class="col-7 mt-2" id="itemCodeOrder">
+    
+                                <label class="col-4 mt-2">Price</label>
+                                <input class="col-7 mt-2" id="itemPriceOrder">
+    
+                                <label class="col-4 mt-2">Order-Qty</label>
+                                <input class="col-7 mt-2" id="OrderQty">
+                            </div>
+                        </div>
+    
+    
+                        <div class="text-end mt-3">
+                            <button class="btn btn-primary" id="AddCartBtn" style="background-color:#a94188;border-color:white;" >
+                                <i class="fa fa-plus-circle"  style="color: #ffffff;"></i> &nbsp;
+                                Add
+                            </button>
+                            <button class="btn btn-danger" style="background-color:#a94188;border-color:white;">
+                                <i class="fa fa-times"  style="color: #ffffff;" ></i>
+                                Cancel
+                            </button>
+    
+                        </div>
+                    </div>
+                </div>
+    
+                <!--Place order form-->
+                <div class=" col-lg-4  col-12 bg-body">
+                    <div class="container text-body-secondary border border-3 p-1">
+                        <div class="text-center  p-1" style="background-color:#468585  ; color:white;font-size: 20px;">
+                            Place Order
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-md-2 col-12">
+    
+                            </div>
+    
+                            <div class="col-md-8 col-12" style="font-weight: bold;color: black;">
+                                <label class="col-4 mt-2">Total</label>
+                                <input class="col-7 mt-2" id="total">
+    
+                                <label class="col-4 mt-2">Discount</label>
+                                <input class="col-7 mt-2" id="discount">
+    
+                                <label class="col-4 mt-2">Net Total</label>
+                                <input class="col-7 mt-2" id="net-total">
+                            </div>
+                        </div>
+    
+    
+                        <div class="text-end mt-3">
+                            <button class="btn btn-primary" id="placeOrderBtn" style="background-color:#468585 ;border-color:white;" >
+                                <i class="fa fa-cart-plus"  style="color: #ffffff;"></i> &nbsp;
+                                Place Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+    
+    
+                <!-- place Order table-->
+                <div class="col-12 bg-body ">
+                    <div class="table-responsive mt-2">
+                        <table class="table table-hover table-custom" id="cart-tbl">
+                            <thead class="table-info" >
+                            <tr>
+                                <th scope="col">Item Code</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-group-divider" id="cart-tbl-body">
+                            <tr>
+    
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    
+    
+            </section>
+        </section>
+    </main>
+      
+<script src="assets/lib/jquery-3.7.1.min.js"></script>   
+<script>
+  $("#LoginButton, #SignupButton").show();
+  $("#header").css({display:"block"});
+  $("#customerPage").css({display:"block"});
+  $("#itemPage").css({display:"none"});
+  $("#place-order-page").css({display:"none"});
+
+
+  $("#nav-customer").click(function(){
+    $("#header").css({display: "block"});
+    $("#itemPage").removeClass("active").fadeOut(300, function() {
+        $("#customerPage").addClass("active").fadeIn(300);
+    });
+    $("#place-order-page").removeClass("active").fadeOut(300, function() {
+        $("#customerPage").addClass("active").fadeIn(300);
+    });
+    
+});
+  
+$("#nav-item").click(function(){
+    $("#header").css({display: "block"});
+    $("#customerPage").removeClass("active").fadeOut(300, function() {
+        $("#itemPage").addClass("active").fadeIn(300);
+    });
+    $("#place-order-page").removeClass("active").fadeOut(300, function() {
+        $("#itemPage").addClass("active").fadeIn(300);
+    });
+    
+});
+$("#nav-Place-order").click(function(){
+    $("#header").css({display: "block"});
+    $("#customerPage").removeClass("active").fadeOut(300, function() {
+        $("#place-order-page").addClass("active").fadeIn(300);
+    });
+    $("#itemPage").removeClass("active").fadeOut(300, function() {
+        $("#place-order-page").addClass("active").fadeIn(300);
+    });
+    
+});
+</script>    
+<script src="controllers/customer.js"></script>     
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
