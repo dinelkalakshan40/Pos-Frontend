@@ -64,24 +64,7 @@ $(document).ready(function () {
     $("#customerPhone").val("");
     $("#customerAddress").val("");
   }
-  function loadCustomerTable() {
-    $("#customerTableBody").empty();
-    $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer",
-      method: "GET",
-      success: function (resp) {
-        console.log("Success: ", resp);
-        for (const customer of resp) {
-          $("#customerTableBody").append(`<tr>
-                  <td>${customer.id}</td>
-                  <td>${customer.name}</td>
-                  <td>${customer.address}</td>
-                  <td>${customer.phone}</td>
-              </tr>`);
-        }
-      },
-    });
-  }
+
   function loadCustomerTable() {
     $("#customerTableBody").empty();
     $.ajax({
@@ -113,4 +96,17 @@ $(document).ready(function () {
       },
     });
   }
+  $("#customerTableBody").on("click", "tr", function () {
+    var index = $(this).index();
+    recordIndex = index;
+    var id = $(this).find("td:eq(0)").text();
+    var name = $(this).find("td:eq(1)").text();
+    var phone = $(this).find("td:eq(2)").text();
+    var address = $(this).find("td:eq(3)").text();
+
+    $("#customerId").val(id);
+    $("#customerName").val(name);
+    $("#customerPhone").val(phone);
+    $("#customerAddress").val(address);
+  });
 });
