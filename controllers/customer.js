@@ -1,6 +1,6 @@
 $(document).ready(function () {
   // Optionally, generate a new customer ID when the page loads
-  loadCustomerTable();
+  // loadCustomerTable();
   generateNewCustomerId();
   window.onload = function () {
     generateNewCustomerId();
@@ -27,7 +27,7 @@ $(document).ready(function () {
     console.log(customerJSON);
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer",
+      url: "http://localhost:8080/CafeManagement2024/customer" + id,
       type: "POST",
       data: customerJSON,
       headers: { "Content-Type": "application/json" },
@@ -39,6 +39,43 @@ $(document).ready(function () {
       },
       error: (res) => {
         console.error(res);
+      },
+    });
+  });
+  $("#update-customer").click(function () {
+    event.preventDefault();
+
+    let id = $("#customerId").val();
+    let name = $("#customerName").val();
+    let phone = $("#customerPhone").val();
+    let address = $("#customerAddress").val();
+
+    const customerData = {
+      id: id,
+      name: name,
+      phone: phone,
+      address: address,
+    };
+    console.log(customerData);
+
+    const customerJSON = JSON.stringify(customerData);
+    console.log(customerJSON);
+
+    $.ajax({
+      url: "http://localhost:8080/CafeManagement2024/customer?id=" + id,
+      type: "PUT",
+      data: customerJSON,
+      headers: { "Content-Type": "application/json" },
+      success: (res) => {
+        console.log(JSON.stringify(res));
+        console.log("customer updated");
+        generateNewCustomerId();
+        loadCustomerTable();
+        clearCustomerFields();
+      },
+      error: (res) => {
+        console.error(res);
+        console.log("customer update failed");
       },
     });
   });
