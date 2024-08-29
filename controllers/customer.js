@@ -1,5 +1,7 @@
 $(document).ready(function () {
   // Optionally, generate a new customer ID when the page loads
+  loadCustomerTable();
+  generateNewCustomerId();
   window.onload = function () {
     generateNewCustomerId();
     loadCustomerTable();
@@ -31,7 +33,8 @@ $(document).ready(function () {
       headers: { "Content-Type": "application/json" },
       success: (res) => {
         console.log(JSON.stringify(res));
-
+        generateNewCustomerId();
+        loadCustomerTable();
         clearCustomerFields();
       },
       error: (res) => {
@@ -40,13 +43,13 @@ $(document).ready(function () {
     });
   });
 
-  // Event listener for the "Add" button
-
   function generateNewCustomerId() {
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer", // URL of your servlet
+      url: "http://localhost:8080/CafeManagement2024/customer", //
       method: "GET",
+      dataType: "json",
       success: (res) => {
+        console.log(res);
         // Populate the Customer ID input field with the response data
         $("#customerId").val(res);
       },
@@ -61,7 +64,7 @@ $(document).ready(function () {
     $("#customerPhone").val("");
     $("#customerAddress").val("");
   }
-  /* function loadCustomerTable() {
+  function loadCustomerTable() {
     $("#customerTableBody").empty();
     $.ajax({
       url: "http://localhost:8080/CafeManagement2024/customer",
@@ -78,16 +81,18 @@ $(document).ready(function () {
         }
       },
     });
-  } */
+  }
   function loadCustomerTable() {
+    $("#customerTableBody").empty();
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer",
+      url: "http://localhost:8080/CafeManagement2024/customer?action=loadAll",
       method: "GET",
       dataType: "json",
       success: function (res) {
         console.log(res); // Log the response to verify the data format
 
         if (Array.isArray(res)) {
+          console.log(res);
           // Check if 'res' is an array
           res.forEach(function (customer) {
             var customerRecord = `
@@ -108,41 +113,4 @@ $(document).ready(function () {
       },
     });
   }
-
-  /* function loadCustomerTable() {
-    const $tableBody = $("#customerTableBody");
-    $tableBody.empty();
-
-    $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer",
-      method: "GET",
-      dataType: "json", // Ensures the response is parsed as JSON
-      success: (customerss) => {
-        if (Array.isArray(customerss) && customerss.length > 0) {
-          console.log("Customers received:", customerss);
-          customerss.forEach((customer) => {
-            const $row = $("<tr></tr>"); // Create a new row
-
-            // Create and append cells to the row
-            $("<td></td>").text(customer.id).appendTo($row);
-            $("<td></td>").text(customer.name).appendTo($row);
-            $("<td></td>").text(customer.address).appendTo($row);
-            $("<td></td>").text(customer.phone).appendTo($row);
-
-            // Append the row to the table body
-            $tableBody.append($row);
-          });
-        } else {
-          console.warn("No customers available or response is not an array.");
-          const $row = $("<tr></tr>");
-          $('<td colspan="4">No customers available</td>').appendTo($row);
-          $tableBody.append($row);
-        }
-      },
-      error: function (error) {
-        console.error("Error fetching customers:", error);
-        alert("An error occurred while fetching the customers.");
-      },
-    });
-  } */
 });
