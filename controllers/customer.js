@@ -79,6 +79,27 @@ $(document).ready(function () {
       },
     });
   });
+  //delete customer
+  $("#delete-customer").on("click", () => {
+    event.preventDefault();
+    let id = $("#customerId").val();
+
+    $.ajax({
+      url: "http://localhost:8080/CafeManagement2024/customer?id=" + id,
+      type: "DELETE",
+      success: (res) => {
+        console.log(JSON.stringify(res));
+        console.log("Customer Deleted");
+        generateNewCustomerId();
+        loadCustomerTable();
+        clearCustomerFields();
+      },
+      error: (res) => {
+        console.error(res);
+        console.log("Customer Not Deleted");
+      },
+    });
+  });
 
   function generateNewCustomerId() {
     $.ajax({
