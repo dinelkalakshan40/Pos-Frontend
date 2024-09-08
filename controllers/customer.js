@@ -122,6 +122,16 @@ $(document).ready(function () {
     $("#customerPhone").val("");
     $("#customerAddress").val("");
   }
+  function clearBtn() {
+    $("#customer-clear-btn").click(function () {
+      // Clear each specific input field
+      //  $("#customerId").val("");
+      $("#customerName").val("");
+      $("#customerPhone").val("");
+      $("#customerAddress").val("");
+      generateNewCustomerId();
+    });
+  }
 
   function loadCustomerTable() {
     $("#customerTableBody").empty();
@@ -154,6 +164,36 @@ $(document).ready(function () {
       },
     });
   }
+
+  $("#search-customer").on("click", function () {
+    const customerID = $("#searchCustomer").val().toLowerCase();
+
+    $.ajax({
+      url:
+        "http://localhost:8080/CafeManagement2024/customer?customerID=" +
+        customerID,
+      type: "GET",
+      dataType: "json",
+      success: (response) => {
+        console.log("Full response:", response);
+        var customerDTO = response;
+        console.log("Customer retrieved successfully:", customerDTO);
+
+        $("#customerId").val(customerDTO.id);
+        $("#customerName").val(customerDTO.name);
+        $("#customerPhone").val(customerDTO.phone);
+        $("#customerAddress").val(customerDTO.address);
+        // generateNewCustomerId();
+        clearBtn();
+      },
+
+      error: function (error) {
+        console.error("Error searching customer:", error);
+        loadCustomerTable();
+      },
+    });
+  });
+
   $("#customerTableBody").on("click", "tr", function () {
     var index = $(this).index();
     recordIndex = index;
