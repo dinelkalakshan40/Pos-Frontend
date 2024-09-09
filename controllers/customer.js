@@ -27,7 +27,7 @@ $(document).ready(function () {
     console.log(customerJSON);
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer" + id,
+      url: "http://localhost:8080/CafeManagement2024/customer",
       type: "POST",
       data: customerJSON,
       headers: { "Content-Type": "application/json" },
