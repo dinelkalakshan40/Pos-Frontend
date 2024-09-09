@@ -133,6 +133,10 @@ $(document).ready(function () {
     });
   }
 
+  $("#searchCustomerCanel").click(function () {
+    $("#searchCustomer").val("");
+  });
+
   function loadCustomerTable() {
     $("#customerTableBody").empty();
     $.ajax({
