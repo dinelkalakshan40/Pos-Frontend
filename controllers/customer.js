@@ -174,21 +174,25 @@ $(document).ready(function () {
         customerID,
       type: "GET",
       dataType: "json",
-      success: (response) => {
-        console.log("Full response:", response);
-        var customerDTO = response;
-        console.log("Customer retrieved successfully:", customerDTO);
+      success: function (response) {
+        if (response && response.id) {
+          console.log("Customer retrieved successfully:", response);
 
-        $("#customerId").val(customerDTO.id);
-        $("#customerName").val(customerDTO.name);
-        $("#customerPhone").val(customerDTO.phone);
-        $("#customerAddress").val(customerDTO.address);
-        // generateNewCustomerId();
-        clearBtn();
+          $("#customerId").val(response.id);
+          $("#customerName").val(response.name);
+          $("#customerPhone").val(response.phone);
+          $("#customerAddress").val(response.address);
+
+          // generateNewCustomerId(); // Uncomment if needed.
+          clearBtn();
+        } else {
+          alert("Customer ID not found in the database.");
+        }
       },
 
       error: function (error) {
         console.error("Error searching customer:", error);
+        alert("Error: Customer not found");
         loadCustomerTable();
       },
     });
