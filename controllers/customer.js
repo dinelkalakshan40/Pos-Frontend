@@ -122,16 +122,12 @@ $(document).ready(function () {
     $("#customerPhone").val("");
     $("#customerAddress").val("");
   }
-  function clearBtn() {
-    $("#customer-clear-btn").click(function () {
-      // Clear each specific input field
-      //  $("#customerId").val("");
-      $("#customerName").val("");
-      $("#customerPhone").val("");
-      $("#customerAddress").val("");
-      generateNewCustomerId();
-    });
-  }
+  $("#customer-clear-btn").click(function () {
+    $("#customerName").val("");
+    $("#customerPhone").val("");
+    $("#customerAddress").val("");
+    generateNewCustomerId();
+  });
 
   $("#searchCustomerCanel").click(function () {
     $("#searchCustomer").val("");
