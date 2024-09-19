@@ -1,6 +1,6 @@
 $(document).ready(function () {
   // Optionally, generate a new customer ID when the page loads
-  // loadCustomerTable();
+  loadCustomerTable();
   generateNewCustomerId();
   window.onload = function () {
     generateNewCustomerId();
