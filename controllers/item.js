@@ -120,7 +120,7 @@ $(document).ready(function () {
     generateNewItemId();
   });
 
-  $("#item-searchBtn").click(function () {
+  $("#item-cancelBtn").click(function () {
     $("#searchItem").val("");
   });
   function loadItemTable() {
@@ -162,16 +162,13 @@ $(document).ready(function () {
       type: "GET",
       dataType: "json",
       success: function (response) {
-        if (response && response.id) {
+        if (response && response.itemID) {
           console.log("Item retrieved successfully:", response);
 
           $("#itemIDtxt").val(response.itemID);
           $("#itemNametxt").val(response.itemName);
           $("#itemPricetxt").val(response.itemPrice);
           $("#itemQtytxt").val(response.itemQty);
-
-          // generateNewCustomerId(); // Uncomment if needed.
-          clearItemBtn();
         } else {
           alert("Item ID not found in the database.");
         }
