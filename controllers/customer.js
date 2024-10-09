@@ -1,11 +1,6 @@
 $(document).ready(function () {
-  // Optionally, generate a new customer ID when the page loads
-  loadCustomerTable();
+  // loadCustomerTable();
   generateNewCustomerId();
-  window.onload = function () {
-    generateNewCustomerId();
-    loadCustomerTable();
-  };
 
   $("#save-customer").click(function () {
     event.preventDefault();
@@ -27,22 +22,39 @@ $(document).ready(function () {
     console.log(customerJSON);
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer",
+      url: "http://localhost:8080/SpringPosSystem/api/v1/customers",
       type: "POST",
+      contentType: "application/json",
       data: customerJSON,
-      headers: { "Content-Type": "application/json" },
-      success: (res) => {
-        console.log(JSON.stringify(res));
+      success: function (res, status, xhr) {
+        console.log("Response received:", xhr.status); // Should print 201 (Created)
+        console.log(res);
         generateNewCustomerId();
-        loadCustomerTable();
-        clearCustomerFields();
       },
       error: (res) => {
-        console.error(res);
+        console.error(JSON.stringify(res));
       },
     });
   });
-  $("#update-customer").click(function () {
+  function generateNewCustomerId() {
+    $.ajax({
+      url: "http://localhost:8080/SpringPosSystem/api/v1/customers/customerId", //
+      method: "GET",
+      dataType: "json",
+      success: (res) => {
+        console.log(res);
+
+        $("#customerId").val(res.customerId);
+        if (res.message) {
+          console.log(res.message); // Log the message with the customer ID
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+      },
+    });
+  }
+  /*   $("#update-customer").click(function () {
     event.preventDefault();
 
     let id = $("#customerId").val();
@@ -101,21 +113,7 @@ $(document).ready(function () {
     });
   });
 
-  function generateNewCustomerId() {
-    $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer", //
-      method: "GET",
-      dataType: "json",
-      success: (res) => {
-        console.log(res);
-        // Populate the Customer ID input field with the response data
-        $("#customerId").val(res);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", error);
-      },
-    });
-  }
+  
   function clearCustomerFields() {
     $("#customerId").val("");
     $("#customerName").val("");
@@ -136,7 +134,7 @@ $(document).ready(function () {
   function loadCustomerTable() {
     $("#customerTableBody").empty();
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer?action=loadAll",
+      url: "http://localhost:8080/SpringPosSystem/api/v1/customers?action=loadAll",
       method: "GET",
       dataType: "json",
       success: function (res) {
@@ -210,5 +208,5 @@ $(document).ready(function () {
     $("#customerName").val(name);
     $("#customerPhone").val(phone);
     $("#customerAddress").val(address);
-  });
+  }); */
 });
