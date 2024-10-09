@@ -30,6 +30,7 @@ $(document).ready(function () {
         console.log("Response received:", xhr.status); // Should print 201 (Created)
         console.log(res);
         generateNewCustomerId();
+        clearCustomerFields();
       },
       error: (res) => {
         console.error(JSON.stringify(res));
@@ -54,7 +55,13 @@ $(document).ready(function () {
       },
     });
   }
-  /*   $("#update-customer").click(function () {
+  function clearCustomerFields() {
+    $("#customerId").val("");
+    $("#customerName").val("");
+    $("#customerPhone").val("");
+    $("#customerAddress").val("");
+  }
+  $("#update-customer").click(function () {
     event.preventDefault();
 
     let id = $("#customerId").val();
@@ -68,21 +75,18 @@ $(document).ready(function () {
       phone: phone,
       address: address,
     };
-    console.log(customerData);
 
     const customerJSON = JSON.stringify(customerData);
     console.log(customerJSON);
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer?id=" + id,
+      url: `http://localhost:8080/SpringPosSystem/api/v1/customers/${id}`,
       type: "PUT",
+      contentType: "application/json", // Ensure content type is JSON
       data: customerJSON,
-      headers: { "Content-Type": "application/json" },
-      success: (res) => {
-        console.log(JSON.stringify(res));
-        console.log("customer updated");
+      success: function (res, status, xhr) {
+        console.log("Customer Updated", xhr.status); // Should print 201 (Created)
         generateNewCustomerId();
-        loadCustomerTable();
         clearCustomerFields();
       },
       error: (res) => {
@@ -91,6 +95,7 @@ $(document).ready(function () {
       },
     });
   });
+  /*  
   //delete customer
   $("#delete-customer").on("click", () => {
     event.preventDefault();
@@ -114,12 +119,7 @@ $(document).ready(function () {
   });
 
   
-  function clearCustomerFields() {
-    $("#customerId").val("");
-    $("#customerName").val("");
-    $("#customerPhone").val("");
-    $("#customerAddress").val("");
-  }
+  
   $("#customer-clear-btn").click(function () {
     $("#customerName").val("");
     $("#customerPhone").val("");
