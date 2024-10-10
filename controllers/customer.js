@@ -95,20 +95,17 @@ $(document).ready(function () {
       },
     });
   });
-  /*  
-  //delete customer
   $("#delete-customer").on("click", () => {
     event.preventDefault();
     let id = $("#customerId").val();
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/customer?id=" + id,
+      url: "http://localhost:8080/SpringPosSystem/api/v1/customers/" + id,
       type: "DELETE",
       success: (res) => {
         console.log(JSON.stringify(res));
-        console.log("Customer Deleted");
         generateNewCustomerId();
-        loadCustomerTable();
+        //  loadCustomerTable();
         clearCustomerFields();
       },
       error: (res) => {
@@ -117,6 +114,9 @@ $(document).ready(function () {
       },
     });
   });
+  /*  
+  
+  
 
   
   
