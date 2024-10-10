@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  // loadCustomerTable();
+  loadCustomerTable();
   generateNewCustomerId();
 
   $("#save-customer").click(function () {
@@ -105,7 +105,7 @@ $(document).ready(function () {
       success: (res) => {
         console.log(JSON.stringify(res));
         generateNewCustomerId();
-        //  loadCustomerTable();
+        loadCustomerTable();
         clearCustomerFields();
       },
       error: (res) => {
@@ -114,34 +114,22 @@ $(document).ready(function () {
       },
     });
   });
-  /*  
-  
-  
-
-  
-  
   $("#customer-clear-btn").click(function () {
     $("#customerName").val("");
     $("#customerPhone").val("");
     $("#customerAddress").val("");
     generateNewCustomerId();
   });
-
-  $("#searchCustomerCanel").click(function () {
-    $("#searchCustomer").val("");
-  });
-
   function loadCustomerTable() {
     $("#customerTableBody").empty();
     $.ajax({
-      url: "http://localhost:8080/SpringPosSystem/api/v1/customers?action=loadAll",
+      url: "http://localhost:8080/SpringPosSystem/api/v1/customers",
       method: "GET",
       dataType: "json",
       success: function (res) {
         console.log(res); // Log the response to verify the data format
 
         if (Array.isArray(res)) {
-          console.log(res);
           // Check if 'res' is an array
           res.forEach(function (customer) {
             var customerRecord = `
@@ -162,6 +150,19 @@ $(document).ready(function () {
       },
     });
   }
+  /*  
+  
+  
+
+  
+  
+  
+
+  $("#searchCustomerCanel").click(function () {
+    $("#searchCustomer").val("");
+  });
+
+  
 
   $("#search-customer").on("click", function () {
     const customerID = $("#searchCustomer").val().toLowerCase();
