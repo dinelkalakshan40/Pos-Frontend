@@ -89,6 +89,7 @@ $(document).ready(function () {
         console.log("Customer Updated", xhr.status); // Should print 201 (Created)
         generateNewCustomerId();
         clearCustomerFields();
+        loadCustomerTable();
       },
       error: (res) => {
         console.error(res);
@@ -183,8 +184,6 @@ $(document).ready(function () {
           $("#customerName").val(response.name);
           $("#customerPhone").val(response.phone);
           $("#customerAddress").val(response.address);
-
-          clearBtn();
         } else {
           alert("Customer ID not found in the database.");
         }
