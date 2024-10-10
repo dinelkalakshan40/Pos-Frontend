@@ -30,6 +30,7 @@ $(document).ready(function () {
         console.log("Response received:", xhr.status); // Should print 201 (Created)
         console.log(res);
         generateNewCustomerId();
+        loadCustomerTable();
         clearCustomerFields();
       },
       error: (res) => {
@@ -150,27 +151,28 @@ $(document).ready(function () {
       },
     });
   }
-  /*  
-  
-  
+  $("#customerTableBody").on("click", "tr", function () {
+    var index = $(this).index();
+    recordIndex = index;
+    var id = $(this).find("td:eq(0)").text();
+    var name = $(this).find("td:eq(1)").text();
+    var phone = $(this).find("td:eq(2)").text();
+    var address = $(this).find("td:eq(3)").text();
 
-  
-  
-  
-
+    $("#customerId").val(id);
+    $("#customerName").val(name);
+    $("#customerPhone").val(phone);
+    $("#customerAddress").val(address);
+  });
   $("#searchCustomerCanel").click(function () {
     $("#searchCustomer").val("");
   });
-
-  
-
   $("#search-customer").on("click", function () {
-    const customerID = $("#searchCustomer").val().toLowerCase();
+    const customerId = $("#searchCustomer").val().toLowerCase();
 
     $.ajax({
       url:
-        "http://localhost:8080/CafeManagement2024/customer?customerID=" +
-        customerID,
+        "http://localhost:8080/SpringPosSystem/api/v1/customers/" + customerId, // Use the path variable
       type: "GET",
       dataType: "json",
       success: function (response) {
@@ -182,7 +184,6 @@ $(document).ready(function () {
           $("#customerPhone").val(response.phone);
           $("#customerAddress").val(response.address);
 
-          // generateNewCustomerId(); // Uncomment if needed.
           clearBtn();
         } else {
           alert("Customer ID not found in the database.");
@@ -196,18 +197,4 @@ $(document).ready(function () {
       },
     });
   });
-
-  $("#customerTableBody").on("click", "tr", function () {
-    var index = $(this).index();
-    recordIndex = index;
-    var id = $(this).find("td:eq(0)").text();
-    var name = $(this).find("td:eq(1)").text();
-    var phone = $(this).find("td:eq(2)").text();
-    var address = $(this).find("td:eq(3)").text();
-
-    $("#customerId").val(id);
-    $("#customerName").val(name);
-    $("#customerPhone").val(phone);
-    $("#customerAddress").val(address);
-  }); */
 });
