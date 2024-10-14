@@ -145,22 +145,14 @@ $(document).ready(function () {
       },
     });
   }
-  /*  
-  
-  
-  
-
-  
-
   $("#item-cancelBtn").click(function () {
     $("#searchItem").val("");
   });
-  
   $("#item-searchBtn").on("click", function () {
     const itemID = $("#searchItem").val().toLowerCase();
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/item?itemID=" + itemID,
+      url: "http://localhost:8080/SpringPosSystem/api/v1/items/" + itemID,
       type: "GET",
       dataType: "json",
       success: function (response) {
@@ -195,5 +187,5 @@ $(document).ready(function () {
     $("#itemNametxt").val(itemName);
     $("#itemPricetxt").val(itemPrice);
     $("#itemQtytxt").val(itemQty);
-  }); */
+  });
 });
