@@ -1,9 +1,7 @@
 $(document).ready(function () {
   generateNewItemId();
   loadItemTable();
-  window.onload = function () {
-    generateNewItemId();
-  };
+
   $("#item-saveBtn").click(function () {
     event.preventDefault();
     let itemID = $("#itemIDtxt").val();
@@ -17,14 +15,13 @@ $(document).ready(function () {
       itemPrice: itemPrice,
       itemQty: itemQty,
     };
-    console.log(itemData);
     const itemJson = JSON.stringify(itemData);
     console.log(itemJson);
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/item",
+      url: "http://localhost:8080/SpringPosSystem/api/v1/items",
       type: "POST",
       data: itemJson,
-      headers: { "Content-Type": "application/json" },
+      contentType: "application/json",
       success: (res) => {
         console.log(JSON.stringify(res));
         console.log("Item is Saved");
@@ -37,6 +34,21 @@ $(document).ready(function () {
       },
     });
   });
+  function generateNewItemId() {
+    $.ajax({
+      url: "http://localhost:8080/SpringPosSystem/api/v1/items/itemId", //
+      method: "GET",
+      dataType: "json",
+      success: (res) => {
+        console.log(res);
+
+        $("#itemIDtxt").val(res.itemId);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+      },
+    });
+  }
   $("#item-updateBtn").click(function () {
     event.preventDefault();
 
@@ -56,10 +68,10 @@ $(document).ready(function () {
     console.log(itemJson);
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/item?id=" + id,
+      url: `http://localhost:8080/SpringPosSystem/api/v1/items/${itemID}`,
       type: "PUT",
       data: itemJson,
-      headers: { "Content-Type": "application/json" },
+      contentType: "application/json",
       success: (res) => {
         console.log(JSON.stringify(res));
         generateNewItemId();
@@ -72,12 +84,18 @@ $(document).ready(function () {
       },
     });
   });
+  function clearItemFields() {
+    $("#itemIDtxt").val("");
+    $("#itemNametxt").val("");
+    $("#itemPricetxt").val("");
+    $("#itemQtytxt").val("");
+  }
   $("#item-deleteBtn").on("click", () => {
     event.preventDefault();
-    let id = $("#itemIDtxt").val();
+    let itemID = $("#itemIDtxt").val();
 
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/item?id=" + id,
+      url: "http://localhost:8080/SpringPosSystem/api/v1/items/" + itemID,
       type: "DELETE",
       success: (res) => {
         console.log(JSON.stringify(res));
@@ -91,49 +109,22 @@ $(document).ready(function () {
       },
     });
   });
-  function generateNewItemId() {
-    $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/item", //
-      method: "GET",
-      dataType: "json",
-      success: (res) => {
-        console.log(res);
-
-        $("#itemIDtxt").val(res);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", error);
-      },
-    });
-  }
-  function clearItemFields() {
-    $("#itemIDtxt").val("");
-    $("#itemNametxt").val("");
-    $("#itemPricetxt").val("");
-    $("#itemQtytxt").val("");
-  }
-
   $("#item-clearBtn").click(function () {
     $("#itemNametxt").val("");
     $("#itemPricetxt").val("");
     $("#itemQtytxt").val("");
     generateNewItemId();
   });
-
-  $("#item-cancelBtn").click(function () {
-    $("#searchItem").val("");
-  });
   function loadItemTable() {
     $("#itemTableBody").empty();
     $.ajax({
-      url: "http://localhost:8080/CafeManagement2024/item?action=loadAll",
+      url: "http://localhost:8080/SpringPosSystem/api/v1/items",
       method: "GET",
       dataType: "json",
       success: function (res) {
         console.log(res); // Log the response to verify the data format
 
         if (Array.isArray(res)) {
-          console.log(res);
           // Check if 'res' is an array
           res.forEach(function (item) {
             var itemRecord = `
@@ -154,6 +145,17 @@ $(document).ready(function () {
       },
     });
   }
+  /*  
+  
+  
+  
+
+  
+
+  $("#item-cancelBtn").click(function () {
+    $("#searchItem").val("");
+  });
+  
   $("#item-searchBtn").on("click", function () {
     const itemID = $("#searchItem").val().toLowerCase();
 
@@ -193,5 +195,5 @@ $(document).ready(function () {
     $("#itemNametxt").val(itemName);
     $("#itemPricetxt").val(itemPrice);
     $("#itemQtytxt").val(itemQty);
-  });
+  }); */
 });
