@@ -104,4 +104,36 @@ $(document).ready(function () {
       // Handle the error appropriately (e.g., display a message to the user)
     }
   });
+  function showToast(message, duration = 4000) {
+    const toast = document.createElement("div");
+
+    // Styling for the toast
+    toast.style.position = "relative";
+    toast.style.padding = "20px 20px";
+    toast.style.marginBottom = "10px";
+    toast.style.borderRadius = "5px";
+    toast.style.backgroundColor = "#f44336"; // Red background for error
+    toast.style.color = "white";
+    toast.style.fontSize = "16px";
+    toast.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.1)";
+    toast.innerText = message;
+
+    // Add the toast to the container
+    document.getElementById("toast-container").appendChild(toast);
+
+    // Remove the toast after the specified duration
+    setTimeout(() => {
+      toast.remove();
+    }, duration);
+  }
+  //test Order qty
+  $("#OrderQty").on("input", () => {
+    const orderQty = parseInt($("#OrderQty").val());
+    const availableQty = parseInt($("#itemQtyOrder").val());
+
+    if (orderQty > availableQty) {
+      showToast("Order quantity exceeds available quantity!", 3000);
+      $("#OrderQty").val(availableQty); // Reset to maximum available quantity
+    }
+  });
 });
