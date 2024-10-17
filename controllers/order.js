@@ -183,15 +183,26 @@ $(document).ready(function () {
     `;
     document.getElementById("cart-tbl-body").appendChild(cartRow);
     const originalQty = parseInt($("#itemQtyOrder").val());
+    cartTotal += order.total;
+    updateSubtotal();
 
     // Add event listener to the Delete button
     cartRow.querySelector(".delete-btn").addEventListener("click", function () {
       // Restore the original quantity back to #itemQtyOrder
       const currentQty = parseInt($("#itemQtyOrder").val());
-      const updatedQty = currentQty + order.ItemQty; // Add back the removed quantity
+      const updatedQty = currentQty + order.ItemQty;
       $("#itemQtyOrder").val(updatedQty);
 
-      cartRow.remove(); // Remove the row when the Delete button is clicked
+      // Update subtotal
+      cartTotal -= order.total;
+      updateSubtotal();
+
+      cartRow.remove();
     });
+  }
+  let cartTotal = 0;
+  function updateSubtotal() {
+    // Update the subtotal
+    $("#subTotal").val(cartTotal.toFixed(2));
   }
 });
