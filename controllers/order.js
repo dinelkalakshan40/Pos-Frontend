@@ -136,24 +136,12 @@ $(document).ready(function () {
       $("#OrderQty").val(availableQty); // Reset to maximum available quantity
     }
   });
-  /* $("#AddCartBtn").click(function () {
-    // Get the values from the input fields
-    const order = {
-      ItemCode: $("#itemCodeOrder").val(),
-      ItemName: $("#itemNameOrder").val(),
-      ItemPrice: parseFloat($("#itemPriceOrder").val()),
-      ItemQty: parseInt($("#itemQtyOrder").val()),
-      total:
-        parseFloat($("#itemPriceOrder").val()) *
-        parseInt($("#itemQtyOrder").val()),
-    };
-
-    // Add the item to the cart table
-    addItemToCart(order);
-  }); */
   $("#AddCartBtn").click(function () {
-    const availableQtyElement = $("#itemQtyOrder"); // Get the QtyOnHand input element
-    const orderQtyElement = $("#OrderQty"); // Get the OrderQty input element
+    const selectedItemCode = $("#itemCodeOrder").val();
+    const selectedItem = items.find((item) => item.itemID == selectedItemCode);
+
+    const availableQtyElement = $("#itemQtyOrder");
+    const orderQtyElement = $("#OrderQty");
 
     const availableQty = parseInt(availableQtyElement.val()); // Get available quantity
     const orderQty = parseInt(orderQtyElement.val()); // Get order quantity
@@ -167,13 +155,15 @@ $(document).ready(function () {
     const newQtyOnHand = availableQty - orderQty;
     availableQtyElement.val(newQtyOnHand); // Set the new available quantity
 
+    selectedItem.itemQty = newQtyOnHand;
+
     // Create the order object with the dynamic OrderQty
     const order = {
       ItemCode: $("#itemCodeOrder").val(),
-      ItemName: "Sample Item", // Set a sample name (you can retrieve this from your data source)
+      ItemName: $("#itemNameOrder").val(),
       ItemPrice: parseFloat($("#itemPriceOrder").val()),
-      ItemQty: orderQty, // The quantity ordered (dynamic OrderQty)
-      total: parseFloat($("#itemPriceOrder").val()) * orderQty, // Calculate total price
+      ItemQty: orderQty,
+      total: parseFloat($("#itemPriceOrder").val()) * orderQty,
     };
 
     // Add the item to the cart
