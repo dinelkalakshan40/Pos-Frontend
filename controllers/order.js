@@ -112,7 +112,7 @@ $(document).ready(function () {
     toast.style.padding = "20px 20px";
     toast.style.marginBottom = "10px";
     toast.style.borderRadius = "5px";
-    toast.style.backgroundColor = "#f44336"; // Red background for error
+    toast.style.backgroundColor = "#f44336";
     toast.style.color = "white";
     toast.style.fontSize = "16px";
     toast.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.1)";
@@ -136,4 +136,58 @@ $(document).ready(function () {
       $("#OrderQty").val(availableQty); // Reset to maximum available quantity
     }
   });
+  /* $("#AddCartBtn").click(function () {
+    // Get the values from the input fields
+    const order = {
+      ItemCode: $("#itemCodeOrder").val(),
+      ItemName: $("#itemNameOrder").val(),
+      ItemPrice: parseFloat($("#itemPriceOrder").val()),
+      ItemQty: parseInt($("#itemQtyOrder").val()),
+      total:
+        parseFloat($("#itemPriceOrder").val()) *
+        parseInt($("#itemQtyOrder").val()),
+    };
+
+    // Add the item to the cart table
+    addItemToCart(order);
+  }); */
+  $("#AddCartBtn").click(function () {
+    const availableQtyElement = $("#itemQtyOrder"); // Get the QtyOnHand input element
+    const orderQtyElement = $("#OrderQty"); // Get the OrderQty input element
+
+    const availableQty = parseInt(availableQtyElement.val()); // Get available quantity
+    const orderQty = parseInt(orderQtyElement.val()); // Get order quantity
+
+    if (orderQty > availableQty) {
+      showToast("Order quantity exceeds available quantity!", 3000);
+      return; // Prevent adding if order quantity exceeds available quantity
+    }
+
+    // Update the QtyOnHand (reduce by the OrderQty)
+    const newQtyOnHand = availableQty - orderQty;
+    availableQtyElement.val(newQtyOnHand); // Set the new available quantity
+
+    // Create the order object with the dynamic OrderQty
+    const order = {
+      ItemCode: $("#itemCodeOrder").val(),
+      ItemName: "Sample Item", // Set a sample name (you can retrieve this from your data source)
+      ItemPrice: parseFloat($("#itemPriceOrder").val()),
+      ItemQty: orderQty, // The quantity ordered (dynamic OrderQty)
+      total: parseFloat($("#itemPriceOrder").val()) * orderQty, // Calculate total price
+    };
+
+    // Add the item to the cart
+    addItemToCart(order);
+  });
+  function addItemToCart(order) {
+    const cartRow = document.createElement("tr");
+    cartRow.innerHTML = `
+        <td>${order.ItemCode}</td>
+        <td>${order.ItemName}</td>
+        <td>${order.ItemPrice.toFixed(2)}</td>
+        <td>${order.ItemQty}</td>
+        <td>${order.total.toFixed(2)}</td>
+    `;
+    document.getElementById("cart-tbl-body").appendChild(cartRow);
+  }
 });
