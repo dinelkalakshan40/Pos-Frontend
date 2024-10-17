@@ -204,5 +204,15 @@ $(document).ready(function () {
   function updateSubtotal() {
     // Update the subtotal
     $("#subTotal").val(cartTotal.toFixed(2));
+    // Get the discount value
+    const discountValue = parseFloat($("#discount").val()) || 0;
+
+    // Calculate discount amount and net total
+
+    const netTotal = cartTotal - discountValue;
+
+    // Update net total
+    $("#net-total").val(netTotal.toFixed(2));
   }
+  $("#discount").on("input", updateSubtotal);
 });
