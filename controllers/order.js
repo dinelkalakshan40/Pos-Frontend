@@ -177,7 +177,21 @@ $(document).ready(function () {
         <td>${order.ItemPrice.toFixed(2)}</td>
         <td>${order.ItemQty}</td>
         <td>${order.total.toFixed(2)}</td>
+        <td>
+            <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+        </td>
     `;
     document.getElementById("cart-tbl-body").appendChild(cartRow);
+    const originalQty = parseInt($("#itemQtyOrder").val());
+
+    // Add event listener to the Delete button
+    cartRow.querySelector(".delete-btn").addEventListener("click", function () {
+      // Restore the original quantity back to #itemQtyOrder
+      const currentQty = parseInt($("#itemQtyOrder").val());
+      const updatedQty = currentQty + order.ItemQty; // Add back the removed quantity
+      $("#itemQtyOrder").val(updatedQty);
+
+      cartRow.remove(); // Remove the row when the Delete button is clicked
+    });
   }
 });
